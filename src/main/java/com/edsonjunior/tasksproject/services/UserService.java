@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.edsonjunior.tasksproject.models.User;
-import com.edsonjunior.tasksproject.repositories.TaskRepository;
 import com.edsonjunior.tasksproject.repositories.UserRepository;
 
 
@@ -19,8 +18,6 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private TaskRepository taskRepository;
 
     public User findById(long id) {
         Optional<User> user = this.userRepository.findById(id);
@@ -33,7 +30,6 @@ public class UserService {
     public User create(User obj){
         obj.setId(null); //? Garantir que crie outro usuario com um novo id
         obj = userRepository.save(obj);
-        this.taskRepository.saveAll(obj.getTasks());
         return obj;
     }
 
