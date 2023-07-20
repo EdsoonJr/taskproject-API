@@ -1,5 +1,6 @@
 package com.edsonjunior.tasksproject.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +20,16 @@ public class TaskService {
     public UserService userService;
 
     public Task findById(long id){
-        Optional<Task> task = this.taskRepository.findById(null);
+        Optional<Task> task = this.taskRepository.findById(id);
 
         return task.orElseThrow(() -> new RuntimeException("Tarefa Não Encontrado Id:"
                 + id + ", Tipo: " + task.getClass().getName()));
+    }
+
+    public List<Task> findAllByUserId(Long userId){
+        List<Task> tasks = taskRepository.findByUser_Id(userId);
+        return tasks;
+        
     }
 
     @Transactional
