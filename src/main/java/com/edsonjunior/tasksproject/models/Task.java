@@ -1,5 +1,6 @@
 package com.edsonjunior.tasksproject.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
@@ -36,7 +37,7 @@ public class Task {
     private Long id;
 
     @ManyToOne
-    @JsonIgnore
+    @JsonBackReference
     @JoinColumn(name = "user_id" , nullable = false , updatable = false)
     private User user;
 
