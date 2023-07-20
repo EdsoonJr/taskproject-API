@@ -39,7 +39,7 @@ public class Task {
 
     
     @ManyToOne
-    @JsonManagedReference
+    //@JsonManagedReference
     //@JsonIgnore
     @JoinColumn(name = "user_id" , nullable = false , updatable = false)
     private User user;
