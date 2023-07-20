@@ -2,6 +2,7 @@ package com.edsonjunior.tasksproject.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -36,8 +37,10 @@ public class Task {
     @Column(name = "id" , unique = true)
     private Long id;
 
+    
     @ManyToOne
-    @JsonBackReference
+    @JsonManagedReference
+    //@JsonIgnore
     @JoinColumn(name = "user_id" , nullable = false , updatable = false)
     private User user;
 

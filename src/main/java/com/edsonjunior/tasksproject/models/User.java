@@ -3,6 +3,9 @@ package com.edsonjunior.tasksproject.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
@@ -58,7 +61,10 @@ public class User {
     private String password;
 
 
+    
     @OneToMany(mappedBy = "user")
+    @JsonBackReference
+    //@JsonIgnore
     private List<Task> tasks = new ArrayList<Task> ();
 
     
