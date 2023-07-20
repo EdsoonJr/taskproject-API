@@ -1,6 +1,7 @@
 package com.edsonjunior.tasksproject.controllers;
 
 import java.net.URI;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.edsonjunior.tasksproject.models.Task;
 import com.edsonjunior.tasksproject.services.TaskService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/task")
 @Validated
@@ -28,11 +31,18 @@ public class TaskController {
     @GetMapping("/{id}")
     public ResponseEntity<Task> findById(@PathVariable long id){
         Task obj = this.taskService.findById(id);
-        return ResponseEntity.ok().body(obj);
+        return ResponseEntity.ok(obj);
+    }
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<Task>> findAllByUserId(@PathVariable Long userId){
+        List<Task> objs = taskService.findAllByUserId(userId);
+        return ResponseEntity.ok().body(objs);
     }
 
     @PostMapping
-    public ResponseEntity<Void> create(@RequestBody Task obj){
+    @Validated
+    public ResponseEntity<Void> create(@Valid @RequestBody Task obj){
         this.taskService.create(obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
         .path("{/id}").buildAndExpand(obj.getId()).toUri();
@@ -40,7 +50,8 @@ public class TaskController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@RequestBody Task obj ,@PathVariable Long id){
+    @Validated
+    public ResponseEntity<Void> update(@Valid @RequestBody Task obj ,@PathVariable Long id){
         obj.setId(id);
         this.taskService.update(obj);
         return ResponseEntity.noContent().build();
