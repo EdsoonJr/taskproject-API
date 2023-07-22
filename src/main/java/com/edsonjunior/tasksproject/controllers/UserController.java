@@ -1,6 +1,7 @@
 package com.edsonjunior.tasksproject.controllers;
 
 import java.net.URI;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -34,6 +35,12 @@ public class UserController {
     public ResponseEntity<User> findById(@PathVariable long id){
         User obj = this.userService.findById(id);
         return ResponseEntity.ok().body(obj);
+    }
+
+    @GetMapping("")
+    public ResponseEntity<List<User>> findAll(){
+        List<User> users = this.userService.findAll();
+        return ResponseEntity.ok().body(users);
     }
 
     @PostMapping

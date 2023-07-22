@@ -1,5 +1,6 @@
 package com.edsonjunior.tasksproject.services;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -24,6 +25,11 @@ public class UserService {
 
         return user.orElseThrow(() -> new RuntimeException("Usuário Não Encontrado Id:"
                 + id + ", Tipo: " + user.getClass().getName()));
+    }
+
+    public List<User> findAll(){
+        List<User> users = this.userRepository.findAll();
+        return users; 
     }
 
     @Transactional //? Maior controle na inserção no banco de dados 
