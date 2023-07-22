@@ -11,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.edsonjunior.tasksproject.models.User;
 import com.edsonjunior.tasksproject.repositories.UserRepository;
+import com.edsonjunior.tasksproject.services.exceptions.DataBindingViolationException;
+import com.edsonjunior.tasksproject.services.exceptions.ObjectNotFoundException;
 
 
 @Service
@@ -23,7 +25,7 @@ public class UserService {
     public User findById(long id) {
         Optional<User> user = this.userRepository.findById(id);
 
-        return user.orElseThrow(() -> new RuntimeException("Usuário Não Encontrado Id:"
+        return user.orElseThrow(() -> new ObjectNotFoundException("Usuário Não Encontrado Id:"
                 + id + ", Tipo: " + user.getClass().getName()));
     }
 
@@ -53,7 +55,7 @@ public class UserService {
         try {
             this.userRepository.deleteById(id);
         } catch (Exception e) {
-            throw new RuntimeException("Não é possivel excluir, pois há relacionamentos");
+            throw new DataBindingViolationException("Não é possivel excluir, pois há relacionamentos");
         }
     }
 }

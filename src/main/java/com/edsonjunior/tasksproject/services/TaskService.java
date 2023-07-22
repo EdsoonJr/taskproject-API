@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.edsonjunior.tasksproject.models.Task;
 import com.edsonjunior.tasksproject.models.User;
 import com.edsonjunior.tasksproject.repositories.TaskRepository;
+import com.edsonjunior.tasksproject.services.exceptions.DataBindingViolationException;
+import com.edsonjunior.tasksproject.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class TaskService {
@@ -22,7 +24,7 @@ public class TaskService {
     public Task findById(long id){
         Optional<Task> task = this.taskRepository.findById(id);
 
-        return task.orElseThrow(() -> new RuntimeException("Tarefa Não Encontrado Id:"
+        return task.orElseThrow(() -> new ObjectNotFoundException("Tarefa Não Encontrado Id:"
                 + id + ", Tipo: " + task.getClass().getName()));
     }
 
@@ -55,7 +57,7 @@ public class TaskService {
         try {
             this.taskRepository.deleteById(null);
         } catch (Exception e) {
-            throw new RuntimeException("Não é possivel excluir, pois há relacionamentos");
+            throw new DataBindingViolationException("Não é possivel excluir, pois há relacionamentos");
         }
     }
     
